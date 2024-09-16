@@ -1,17 +1,12 @@
-import javax.swing.*;
-import java.awt.*;
-import view.login;
+import controller.logincontroller;
+import view.LoginView;
 
-
-public class Main  {
+public class Main {
     public static void main(String[] args) {
-        login Login = new login();
-        Login.setVisible(true);
+        LoginView loginView = new LoginView();
+        loginView.setVisible(true);
 
-
-
-
-
+        logincontroller controller = new logincontroller(loginView);
 
     }
 }
