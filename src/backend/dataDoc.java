@@ -58,4 +58,22 @@ public class dataDoc {
         public void setPassword(String password) {
             this.password = password;
         }
+
+
+    public class DoctorDatabase {
+        private List<dataDoc> doctors;
+
+        public DoctorDatabase() {
+            doctors = new ArrayList<>();
+            // Agregar algunos doctores de ejemplo
+            doctors.add(new dataDoc("1", "Josue Fuentes", "Doctor General", "jfuentes@mail.com", "1234"));
+           doctors.add(new dataDoc("2","fogel","cardiologo","fgro@gmail.com","1234"));
+           doctors.add(new dataDoc("3","minor","pedriatria","mnorg@gmail.com","1234"));
+        }
+
+        public List<dataDoc> getDoctors() {
+            return doctors;
+        }
     }
+
+}
