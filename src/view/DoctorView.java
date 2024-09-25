@@ -1,15 +1,19 @@
 package view;
+
+import backend.datapa;
+import backend.pacientedatabase;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class DoctorView extends JFrame {
-    private JLabel nombreDoctorlabel;
-    private JLabel especialidad;
-
+    private JLabel nombreDoctorLabel;
+    private JLabel especialidadLabel;
     private int[] pantalla = {1300, 800};
 
-    public DoctorView(String nombreDoctor, String especialidad) {
-        // Configuración básica del JFrame con dimensiones desde el atributo pantalla
+    public DoctorView(String nombreDoctor, String especialidad, pacientedatabase pacienteDB) {
+        // Configuración básica del JFrame
         setTitle("Hospital Santa Catalina - Perfil del doctor");
         setSize(pantalla[0], pantalla[1]);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,63 +33,44 @@ public class DoctorView extends JFrame {
         hospitalLabel.setHorizontalAlignment(SwingConstants.LEFT);
         headerPanel.add(hospitalLabel, BorderLayout.WEST);
 
-        // Crear un panel para el nombre del doctor y su especialidad (al lado derecho)
+        // Información del doctor
         JPanel doctorInfoPanel = new JPanel();
-        doctorInfoPanel.setLayout(new GridLayout(2, 1));  // 2 filas, 1 columna
+        doctorInfoPanel.setLayout(new GridLayout(2, 1));
         doctorInfoPanel.setBackground(Color.DARK_GRAY);
 
-        // Etiqueta para el nombre del doctor
-        JLabel doctorNameLabel = new JLabel("nombre del doctor;" + nombreDoctor);
-        doctorNameLabel.setFont(new Font("Arial", Font.BOLD, 17));
-        doctorNameLabel.setForeground(Color.WHITE);
-        doctorNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        doctorInfoPanel.add(doctorNameLabel);
+        // Etiquetas para el nombre y especialidad del doctor
+        nombreDoctorLabel = new JLabel("Nombre del doctor: " + nombreDoctor);
+        nombreDoctorLabel.setForeground(Color.WHITE);
+        especialidadLabel = new JLabel("Especialidad: " + especialidad);
+        especialidadLabel.setForeground(Color.WHITE);
 
-        // Etiqueta para la especialidad del doctor
-        JLabel doctorSpecialtyLabel = new JLabel("especialidad" + especialidad);
-        doctorSpecialtyLabel.setFont(new Font("Arial", Font.PLAIN, 14
-        ));
-        doctorSpecialtyLabel.setForeground(Color.WHITE);
-        doctorSpecialtyLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        doctorInfoPanel.add(doctorSpecialtyLabel);
-
-        // Añadir el panel con la información del doctor al lado derecho
+        doctorInfoPanel.add(nombreDoctorLabel);
+        doctorInfoPanel.add(especialidadLabel);
         headerPanel.add(doctorInfoPanel, BorderLayout.EAST);
-
-        // Añadir headerPanel al norte
         add(headerPanel, BorderLayout.NORTH);
 
-        // Panel para la representación del usuario (userPanel)
-        JPanel userPanel = new JPanel();
-        userPanel.setLayout(new GridBagLayout());
+        // Añadir el menú lateral
+        add(componentesMenuLateral(), BorderLayout.WEST);
 
-        // Añadir el panel de usuario al centro
-        add(userPanel, BorderLayout.CENTER);
-        add(headerPanel, BorderLayout.NORTH);
-        add(componentesmenulateral(), BorderLayout.WEST);
+add(mostrarPacientes(pacienteDB),BorderLayout.CENTER);
     }
 
-
-
-    private JPanel componentesmenulateral() {
+    private JPanel componentesMenuLateral() {
         JPanel menu = new JPanel();
         menu.setPreferredSize(new Dimension(250, pantalla[1]));
-        menu.setBackground(Color.darkGray);
+        menu.setBackground(Color.DARK_GRAY);
         menu.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
 
-
-
-
         JPanel opciones = new JPanel();
         opciones.setLayout(new GridLayout(0, 1, 10, 10));
-        opciones.add(op("opcion1"), gbc);
-        opciones.add(op("opcion2"), gbc);
-        opciones.add(op("opcion3"), gbc);
-        opciones.add(op("opcion4"), gbc);
-        opciones.add(op("opcion5"), gbc);
+        opciones.add(op("Opción 1"));
+        opciones.add(op("Opción 2"));
+        opciones.add(op("Opción 3"));
+        opciones.add(op("Opción 4"));
+        opciones.add(op("Opción 5"));
 
         menu.add(opciones);
         return menu;
@@ -98,4 +83,16 @@ public class DoctorView extends JFrame {
         });
         return op;
     }
+
+    private JPanel mostrarPacientes(pacientedatabase db) {
+
+        ArrayList<datapa> listaPacientes = new ArrayList<>(db.getPacientes());
+
+
+        pacientesView panelPacientes = new pacientesView(listaPacientes);
+
+        add(panelPacientes, BorderLayout.CENTER);
+        return panelPacientes;
+    }
 }
+
