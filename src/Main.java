@@ -1,4 +1,5 @@
 import controller.logincontroller;
+import view.DoctorView;
 import view.LoginView;
 
 public class Main {
@@ -6,7 +7,10 @@ public class Main {
         LoginView loginView = new LoginView();
         loginView.setVisible(true);
 
-        logincontroller controller = new logincontroller(loginView);
+        logincontroller logincontroller = new logincontroller(loginView);
 
+        loginView.setVisible(true);
     }
 }
+
+
