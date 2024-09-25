@@ -61,7 +61,10 @@ public class DoctorView extends JFrame {
 
         // Añadir el panel de usuario al centro
         add(userPanel, BorderLayout.CENTER);
+        add(headerPanel, BorderLayout.NORTH);
+        add(componentesmenulateral(), BorderLayout.WEST);
     }
+
 
 
     private JPanel componentesmenulateral() {
@@ -73,7 +76,11 @@ public class DoctorView extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
 
+
+
+
         JPanel opciones = new JPanel();
+        opciones.setLayout(new GridLayout(0, 1, 10, 10));
         opciones.add(op("opcion1"), gbc);
         opciones.add(op("opcion2"), gbc);
         opciones.add(op("opcion3"), gbc);
