@@ -52,7 +52,7 @@ public class DoctorView extends JFrame {
         // Añadir el menú lateral
         add(componentesMenuLateral(), BorderLayout.WEST);
 
-add(mostrarPacientes(pacienteDB),BorderLayout.CENTER);
+add(mostrarPacientes(pacienteDB),BorderLayout.CENTER );
     }
 
     private JPanel componentesMenuLateral() {
@@ -66,11 +66,11 @@ add(mostrarPacientes(pacienteDB),BorderLayout.CENTER);
 
         JPanel opciones = new JPanel();
         opciones.setLayout(new GridLayout(0, 1, 10, 10));
-        opciones.add(op("Opción 1"));
-        opciones.add(op("Opción 2"));
-        opciones.add(op("Opción 3"));
-        opciones.add(op("Opción 4"));
-        opciones.add(op("Opción 5"));
+        opciones.add(op("consultas del dia"));
+        opciones.add(op("salas"));
+        opciones.add(op("farmacia"));
+        opciones.add(op("pacientes registrados"));
+        opciones.add(op("citar en otra area"));
 
         menu.add(opciones);
         return menu;
