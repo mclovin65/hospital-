@@ -1,7 +1,7 @@
 package controller;
 
 import backend.ValidacionDatodds;
-import backend.pacientedatabase; // Asegúrate de importar la clase
+import backend.pacientedatabase;
 import view.DoctorView;
 import view.LoginView;
 
@@ -15,7 +15,7 @@ public class logincontroller {
     public logincontroller(LoginView loginView, ValidacionDatodds validacionDatodds) {
         this.loginView = loginView;
         this.validacionDatodds = validacionDatodds;
-        this.pacienteDB = new pacientedatabase(); // Inicializa la base de datos de pacientes
+        this.pacienteDB = new pacientedatabase();
         initController();
     }
 

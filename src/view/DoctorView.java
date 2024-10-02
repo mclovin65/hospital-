@@ -1,8 +1,9 @@
 package view;
 
 import backend.datapa;
+import backend.datasalas;
 import backend.pacientedatabase;
-
+import backend.sala;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,7 +11,9 @@ import java.util.ArrayList;
 public class DoctorView extends JFrame {
     private JLabel nombreDoctorLabel;
     private JLabel especialidadLabel;
+    private ArrayList<sala> listasalas;
     private int[] pantalla = {1300, 800};
+    private JPanel panelCentro;  // Panel central para cambiar dinámicamente
 
     public DoctorView(String nombreDoctor, String especialidad, pacientedatabase pacienteDB) {
         // Configuración básica del JFrame
@@ -44,6 +47,9 @@ public class DoctorView extends JFrame {
         especialidadLabel = new JLabel("Especialidad: " + especialidad);
         especialidadLabel.setForeground(Color.WHITE);
 
+        datasalas datasalas = new datasalas();
+        listasalas = datasalas.getListasalas();
+
         doctorInfoPanel.add(nombreDoctorLabel);
         doctorInfoPanel.add(especialidadLabel);
         headerPanel.add(doctorInfoPanel, BorderLayout.EAST);
@@ -52,7 +58,11 @@ public class DoctorView extends JFrame {
         // Añadir el menú lateral
         add(componentesMenuLateral(), BorderLayout.WEST);
 
-add(mostrarPacientes(pacienteDB),BorderLayout.CENTER );
+
+        panelCentro = new JPanel(new BorderLayout());
+        add(panelCentro, BorderLayout.CENTER);
+
+        mostrarPacientes(pacienteDB);
     }
 
     private JPanel componentesMenuLateral() {
@@ -60,39 +70,64 @@ add(mostrarPacientes(pacienteDB),BorderLayout.CENTER );
         menu.setPreferredSize(new Dimension(250, pantalla[1]));
         menu.setBackground(Color.DARK_GRAY);
         menu.setLayout(new GridBagLayout());
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
 
         JPanel opciones = new JPanel();
         opciones.setLayout(new GridLayout(0, 1, 10, 10));
-        opciones.add(op("consultas del dia"));
-        opciones.add(op("salas"));
-        opciones.add(op("farmacia"));
-        opciones.add(op("pacientes registrados"));
-        opciones.add(op("citar en otra area"));
+
+        // Agregamos las opciones del menú con sus acciones
+        opciones.add(op("Consultas del día", e -> System.out.println("Consultas del día")));
+        opciones.add(op("Salas", e -> mostrarSalas()));  // Cambiamos la acción aquí
+        opciones.add(op("Farmacia", e -> System.out.println("Farmacia")));
+        opciones.add(op("Pacientes registrados", e -> System.out.println("Pacientes registrados")));
+        opciones.add(op("Citar en otra área", e -> System.out.println("Citar en otra área")));
 
         menu.add(opciones);
         return menu;
     }
 
-    private JButton op(String texto) {
-        JButton op = new JButton(texto);
-        op.addActionListener(e -> {
-            System.out.println(texto);
-        });
-        return op;
+    private JButton op(String texto, java.awt.event.ActionListener actionListener) {
+        JButton boton = new JButton(texto);
+        boton.addActionListener(actionListener);
+        return boton;
     }
 
-    private JPanel mostrarPacientes(pacientedatabase db) {
-
+    private void mostrarPacientes(pacientedatabase db) {
         ArrayList<datapa> listaPacientes = new ArrayList<>(db.getPacientes());
-
-
         pacientesView panelPacientes = new pacientesView(listaPacientes);
 
-        add(panelPacientes, BorderLayout.CENTER);
-        return panelPacientes;
+
+        panelCentro.removeAll();
+        panelCentro.add(panelPacientes, BorderLayout.CENTER);
+
+        revalidate();
+        repaint();
+    }
+
+    // Método para mostrar las salas y también imprimir sus detalles
+    private void mostrarSalas() {
+        // Crear el panel de las salas
+        salasView panelSalas = new salasView(listasalas);
+
+        System.out.println("=== Detalles de las salas ===");
+        for (sala sala : listasalas) {
+            System.out.println("Sala Nombre: " + sala.getNombre());
+            System.out.println("Estado de la sala: " + sala.getEstado());
+            System.out.println("----------------------------");
+        }
+
+
+        panelCentro.removeAll();
+        panelCentro.add(panelSalas, BorderLayout.CENTER);
+
+        revalidate();
+        repaint();
     }
 }
+
+
+
 
