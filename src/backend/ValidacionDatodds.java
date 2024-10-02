@@ -17,8 +17,6 @@ public class ValidacionDatodds {
             if (doctor.getEmail().equals(email) && doctor.getPassword().equals(contraseña)) {
                 resultado.put("nombre", doctor.getNombre());
                 resultado.put("especialidad", doctor.getEspecialidad());
-                pacientedatabase db=new pacientedatabase();
-
                 break;
             }
         }

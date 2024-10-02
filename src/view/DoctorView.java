@@ -1,22 +1,17 @@
 package view;
-
-import backend.datapa;
-import backend.datasalas;
-import backend.pacientedatabase;
-import backend.sala;
 import javax.swing.*;
 import java.awt.*;
+import backend.datafarmacia;
+import backend.medicamento;
 import java.util.ArrayList;
-
 public class DoctorView extends JFrame {
-    private JLabel nombreDoctorLabel;
-    private JLabel especialidadLabel;
-    private ArrayList<sala> listasalas;
-    private int[] pantalla = {1300, 800};
-    private JPanel panelCentro;  // Panel central para cambiar dinámicamente
+    private JLabel nombreDoctorlabel;
+    private JLabel especialidad;
 
-    public DoctorView(String nombreDoctor, String especialidad, pacientedatabase pacienteDB) {
-        // Configuración básica del JFrame
+    private int[] pantalla = {1300, 800};
+
+    public DoctorView(String nombreDoctor, String especialidad) {
+        // Configuración básica del JFrame con dimensiones desde el atributo pantalla
         setTitle("Hospital Santa Catalina - Perfil del doctor");
         setSize(pantalla[0], pantalla[1]);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,98 +31,104 @@ public class DoctorView extends JFrame {
         hospitalLabel.setHorizontalAlignment(SwingConstants.LEFT);
         headerPanel.add(hospitalLabel, BorderLayout.WEST);
 
-        // Información del doctor
+        // Crear un panel para el nombre del doctor y su especialidad (al lado derecho)
         JPanel doctorInfoPanel = new JPanel();
-        doctorInfoPanel.setLayout(new GridLayout(2, 1));
+        doctorInfoPanel.setLayout(new GridLayout(2, 1));  // 2 filas, 1 columna
         doctorInfoPanel.setBackground(Color.DARK_GRAY);
 
-        // Etiquetas para el nombre y especialidad del doctor
-        nombreDoctorLabel = new JLabel("Nombre del doctor: " + nombreDoctor);
-        nombreDoctorLabel.setForeground(Color.WHITE);
-        especialidadLabel = new JLabel("Especialidad: " + especialidad);
-        especialidadLabel.setForeground(Color.WHITE);
+        // Etiqueta para el nombre del doctor
+        JLabel doctorNameLabel = new JLabel("nombre del doctor;" + nombreDoctor);
+        doctorNameLabel.setFont(new Font("Arial", Font.BOLD, 17));
+        doctorNameLabel.setForeground(Color.WHITE);
+        doctorNameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        doctorInfoPanel.add(doctorNameLabel);
 
-        datasalas datasalas = new datasalas();
-        listasalas = datasalas.getListasalas();
+        // Etiqueta para la especialidad del doctor
+        JLabel doctorSpecialtyLabel = new JLabel("especialidad" + especialidad);
+        doctorSpecialtyLabel.setFont(new Font("Arial", Font.PLAIN, 14
+        ));
+        doctorSpecialtyLabel.setForeground(Color.WHITE);
+        doctorSpecialtyLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        doctorInfoPanel.add(doctorSpecialtyLabel);
 
-        doctorInfoPanel.add(nombreDoctorLabel);
-        doctorInfoPanel.add(especialidadLabel);
+        // Añadir el panel con la información del doctor al lado derecho
         headerPanel.add(doctorInfoPanel, BorderLayout.EAST);
+
+        // Añadir headerPanel al norte
         add(headerPanel, BorderLayout.NORTH);
 
-        // Añadir el menú lateral
-        add(componentesMenuLateral(), BorderLayout.WEST);
+        // Panel para la representación del usuario (userPanel)
+        JPanel userPanel = new JPanel();
+        userPanel.setLayout(new GridBagLayout());
 
-
-        panelCentro = new JPanel(new BorderLayout());
-        add(panelCentro, BorderLayout.CENTER);
-
-        mostrarPacientes(pacienteDB);
+        // Añadir el panel de usuario al centro
+        add(userPanel, BorderLayout.CENTER);
+        add(headerPanel, BorderLayout.NORTH);
+        add(componentesmenulateral(), BorderLayout.WEST);
     }
 
-    private JPanel componentesMenuLateral() {
+
+
+    private JPanel componentesmenulateral() {
         JPanel menu = new JPanel();
         menu.setPreferredSize(new Dimension(250, pantalla[1]));
-        menu.setBackground(Color.DARK_GRAY);
+        menu.setBackground(Color.darkGray);
         menu.setLayout(new GridBagLayout());
-
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
 
+
+
+
         JPanel opciones = new JPanel();
         opciones.setLayout(new GridLayout(0, 1, 10, 10));
-
-        // Agregamos las opciones del menú con sus acciones
-        opciones.add(op("Consultas del día", e -> System.out.println("Consultas del día")));
-        opciones.add(op("Salas", e -> mostrarSalas()));  // Cambiamos la acción aquí
-        opciones.add(op("Farmacia", e -> System.out.println("Farmacia")));
-        opciones.add(op("Pacientes registrados", e -> System.out.println("Pacientes registrados")));
-        opciones.add(op("Citar en otra área", e -> System.out.println("Citar en otra área")));
+        opciones.add(op("opcion1"), gbc);
+        opciones.add(op("opcion2"), gbc);
+        opciones.add(op("opcion3"), gbc);
+        opciones.add(op("opcion4"), gbc);
+        opciones.add(op("opcion5"), gbc);
 
         menu.add(opciones);
         return menu;
     }
 
-    private JButton op(String texto, java.awt.event.ActionListener actionListener) {
-        JButton boton = new JButton(texto);
-        boton.addActionListener(actionListener);
-        return boton;
+    private JButton op(String texto) {
+        JButton op = new JButton(texto);
+        op.addActionListener(e -> {
+            System.out.println(texto);
+        });
+        return op;
     }
 
-    private void mostrarPacientes(pacientedatabase db) {
-        ArrayList<datapa> listaPacientes = new ArrayList<>(db.getPacientes());
-        pacientesView panelPacientes = new pacientesView(listaPacientes);
 
 
-        panelCentro.removeAll();
-        panelCentro.add(panelPacientes, BorderLayout.CENTER);
+    // Método para mostrar los medicamentos en la farmacia sin MedicamentoView
+    private void mostrarMedicamentos() {
+        datafarmacia farmacia = new datafarmacia();
+        // Crear un panel para contener las etiquetas de los medicamentos
+        JPanel panelMedicamentos = new JPanel();
+        panelMedicamentos.setLayout(new GridLayout(0, 1));  // Layout de una columna para los medicamentos
 
-        revalidate();
-        repaint();
-    }
-
-    // Método para mostrar las salas y también imprimir sus detalles
-    private void mostrarSalas() {
-        // Crear el panel de las salas
-        salasView panelSalas = new salasView(listasalas);
-
-        System.out.println("=== Detalles de las salas ===");
-        for (sala sala : listasalas) {
-            System.out.println("Sala Nombre: " + sala.getNombre());
-            System.out.println("Estado de la sala: " + sala.getEstado());
+        System.out.println("=== Lista de Medicamentos ===");
+        for (medicamento med : listamedicamentos) {
+            // Imprimir detalles en consola
+            System.out.println("Nombre: " + med.getNombre());
+            System.out.println("Dosis: " + med.getDosis());
             System.out.println("----------------------------");
+
+            // Crear una etiqueta para mostrar el nombre y la dosis del medicamento en el panel
+            JLabel labelMedicamento = new JLabel(med.getNombre() + " - Dosis: " + med.getDosis());
+            panelMedicamentos.add(labelMedicamento);  // Añadir la etiqueta al panel
         }
 
-
+        // Actualizar el panel central
         panelCentro.removeAll();
-        panelCentro.add(panelSalas, BorderLayout.CENTER);
+        panelCentro.add(new JScrollPane(panelMedicamentos), BorderLayout.CENTER);  // Agregar scroll si la lista es larga
 
         revalidate();
         repaint();
     }
+
+
 }
-
-
-
-

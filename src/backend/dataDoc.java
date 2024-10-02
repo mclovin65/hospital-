@@ -1,7 +1,8 @@
 package backend;
 import java.util.ArrayList;
 import java.util.List;
-public class dataDoc {
+public class
+dataDoc {
 
         private String num;
         private String nombre;
