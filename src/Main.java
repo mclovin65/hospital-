@@ -1,18 +1,23 @@
-import backend.ValidacionDatodds;
-import controller.logincontroller;
-import view.DoctorView;
-import view.LoginView;
+import Backend.validacion;
+import view.loginview;
+import controller.LoginController;
+import javax.swing.*;
+import java.awt.*;
 
-public class Main {
+public class Main extends JFrame {
+
     public static void main(String[] args) {
+    loginview loginview=new loginview();
+    validacion validacion=new validacion();
+    new LoginController(loginview,validacion);
+    loginview.setVisible(true);
 
-        LoginView loginView = new LoginView();
+
+    }
+}
 
 
-        ValidacionDatodds validacionDatodds = new ValidacionDatodds();
 
-        new logincontroller(loginView, validacionDatodds);
-        loginView.setVisible(true);
-    }}
+
 
 

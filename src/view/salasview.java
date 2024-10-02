@@ -1,49 +1,47 @@
 package view;
 
-import backend.sala;
-
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-class salasView extends JPanel {
-    private ArrayList<sala> listaSalas;
+import model.salas;
 
-    public salasView(ArrayList<sala> listaSalas) {
-        this.listaSalas = listaSalas;
-        initPanel();
+import javax.swing.*;
+
+public class salasview extends JPanel {
+    private ArrayList<salas>listado;
+
+    private salasview(ArrayList<salas>listado){
+        this.listado=listado;
+    initpn();
     }
-
-    private void initPanel() {
-        setLayout(new GridLayout(4, 3, 10, 10));
-        for (sala sala : listaSalas) {
-            JPanel panelSala = crearPanelSala(sala.getNombre(), sala.getEstado());
-            add(panelSala);
+    public void initpn(){
+        setLayout(new GridLayout(3,3));
+        for (salas salas:listado){
+            JPanel pns=crearpns(salas.getNombre(),salas.getEstado());
+            add(pns);
         }
+
     }
-
-    private JPanel crearPanelSala(String nombre, String estado) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-
+    public JPanel crearpns(String nombre, String estado){
+        JPanel pn=new JPanel();
+        pn.setLayout(new BorderLayout());
         JLabel nombreLabel = new JLabel(nombre, SwingConstants.CENTER);
         nombreLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        panel.add(nombreLabel, BorderLayout.CENTER);
+        pn .add(nombreLabel, BorderLayout.CENTER);
 
         switch (estado) {
             case "En uso":
-                panel.setBackground(Color.RED);
+                pn.setBackground(Color.RED);
                 break;
             case "Fuera de servicio":
-                panel.setBackground(Color.YELLOW);
+                pn.setBackground(Color.YELLOW);
                 break;
             case "Disponible":
-                panel.setBackground(Color.GREEN);
+                pn.setBackground(Color.GREEN);
                 break;
 
         }
 
-        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        return panel;
+        pn.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        return pn;
     }
 }
-
