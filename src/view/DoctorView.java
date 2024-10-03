@@ -1,9 +1,12 @@
 package view;
 
+import backend.medicamento;
+import backend.datafarmacia;
 import backend.datapa;
 import backend.datasalas;
 import backend.pacientedatabase;
 import backend.sala;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -12,6 +15,7 @@ public class DoctorView extends JFrame {
     private JLabel nombreDoctorLabel;
     private JLabel especialidadLabel;
     private ArrayList<sala> listasalas;
+    private ArrayList<medicamento> listamedicamentos;
     private int[] pantalla = {1300, 800};
     private JPanel panelCentro;  // Panel central para cambiar dinámicamente
 
@@ -47,8 +51,12 @@ public class DoctorView extends JFrame {
         especialidadLabel = new JLabel("Especialidad: " + especialidad);
         especialidadLabel.setForeground(Color.WHITE);
 
+        // Initialize salas and medicamentos
         datasalas datasalas = new datasalas();
         listasalas = datasalas.getListasalas();
+
+        datafarmacia datafarmacia=new datafarmacia();
+        listamedicamentos= (ArrayList<medicamento>) datafarmacia.getmedicamentos();
 
         doctorInfoPanel.add(nombreDoctorLabel);
         doctorInfoPanel.add(especialidadLabel);
@@ -57,7 +65,6 @@ public class DoctorView extends JFrame {
 
         // Añadir el menú lateral
         add(componentesMenuLateral(), BorderLayout.WEST);
-
 
         panelCentro = new JPanel(new BorderLayout());
         add(panelCentro, BorderLayout.CENTER);
@@ -80,8 +87,8 @@ public class DoctorView extends JFrame {
 
         // Agregamos las opciones del menú con sus acciones
         opciones.add(op("Consultas del día", e -> System.out.println("Consultas del día")));
-        opciones.add(op("Salas", e -> mostrarSalas()));  // Cambiamos la acción aquí
-        opciones.add(op("Farmacia", e -> System.out.println("Farmacia")));
+        opciones.add(op("Salas", e -> mostrarSalas()));
+        opciones.add(op("Farmacia", e -> mostrarmedicamentos()));
         opciones.add(op("Pacientes registrados", e -> System.out.println("Pacientes registrados")));
         opciones.add(op("Citar en otra área", e -> System.out.println("Citar en otra área")));
 
@@ -98,7 +105,6 @@ public class DoctorView extends JFrame {
     private void mostrarPacientes(pacientedatabase db) {
         ArrayList<datapa> listaPacientes = new ArrayList<>(db.getPacientes());
         pacientesView panelPacientes = new pacientesView(listaPacientes);
-
 
         panelCentro.removeAll();
         panelCentro.add(panelPacientes, BorderLayout.CENTER);
@@ -119,14 +125,45 @@ public class DoctorView extends JFrame {
             System.out.println("----------------------------");
         }
 
-
         panelCentro.removeAll();
         panelCentro.add(panelSalas, BorderLayout.CENTER);
 
         revalidate();
         repaint();
     }
-}
+
+    private void mostrarmedicamentos() {
+        JPanel panelMedicamentos = new JPanel();
+
+        panelMedicamentos.setLayout(new GridLayout(0, 7, 10, 10));
+// Añadir títulos de las columnas
+        panelMedicamentos.add(new JLabel("Nombre"));
+        panelMedicamentos.add(new JLabel("Dosis"));
+        panelMedicamentos.add(new JLabel("Número de Lote"));
+        panelMedicamentos.add(new JLabel("Principio Activo"));
+        panelMedicamentos.add(new JLabel("Forma Farmacéutica"));
+        panelMedicamentos.add(new JLabel("Indicaciones"));
+        panelMedicamentos.add(new JLabel("Fecha de Caducidad"));
+
+// Ahora añadimos los datos de cada medicamento
+        for (medicamento med : listamedicamentos) {
+            panelMedicamentos.add(new JLabel(med.getNombre()));
+            panelMedicamentos.add(new JLabel(med.getDosis()));
+            panelMedicamentos.add(new JLabel(med.getNumeroLote()));
+            panelMedicamentos.add(new JLabel(med.getPrincipioActivo()));
+            panelMedicamentos.add(new JLabel(med.getFormaFarmaceutica()));
+            panelMedicamentos.add(new JLabel(med.getIndicaciones()));
+            panelMedicamentos.add(new JLabel(med.getFechaCaducidad().toString())); // Si es de tipo Date o LocalDate
+        }
+        panelCentro.removeAll();
+        panelCentro.add(panelMedicamentos, BorderLayout.CENTER);
+
+        revalidate();
+        repaint();
+    }
+    }
+
+
 
 
 
