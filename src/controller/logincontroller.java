@@ -3,6 +3,7 @@ package controller;
 import backend.ValidacionDatodds;
 import view.DoctorView;
 import view.LoginView;
+import backend.datafarmacia;
 
 import java.util.HashMap;
 
@@ -11,6 +12,7 @@ public class logincontroller {
     private ValidacionDatodds validacionDatodds;
 
     public logincontroller(LoginView loginView, ValidacionDatodds validacionDatodds) {
+
         this.loginView = loginView;
         this.validacionDatodds = validacionDatodds;
         initController();
@@ -30,7 +32,10 @@ public class logincontroller {
             String nombreDoctor = resultado.get("nombre");
             String especialidad = resultado.get("especialidad");
 
-            DoctorView doctorView = new DoctorView(nombreDoctor, especialidad);
+            // Usar la instancia de pacientedatabase en lugar de listaPacientes
+          
+            DoctorView doctorView = new DoctorView(nombreDoctor, especialidad, pacienteDB);
+
             doctorView.setVisible(true);
         }
     }
