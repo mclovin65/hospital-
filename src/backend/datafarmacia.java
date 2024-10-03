@@ -95,4 +95,4 @@ public class datafarmacia {
     public List<medicamento> getmedicamentos() {
         return new ArrayList<>(medicamentos); // Devuelve una copia de la lista de medicamentos
     }
-}
+
