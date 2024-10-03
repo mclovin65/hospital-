@@ -2,26 +2,26 @@ package view;
 
 import java.awt.*;
 import java.util.ArrayList;
-import model.salas;
+import backend.sala;
 
 import javax.swing.*;
 
 public class salasview extends JPanel {
-    private ArrayList<salas>listado;
+    private ArrayList<sala>listado;
 
-    private salasview(ArrayList<salas>listado){
+    salasview(ArrayList<sala> listado){
         this.listado=listado;
     initpn();
     }
     public void initpn(){
         setLayout(new GridLayout(3,3));
-        for (salas salas:listado){
-            JPanel pns=crearpns(salas.getNombre(),salas.getEstado());
+        for (sala salas:listado){
+            JPanel pns=crearpanelsalas(salas.getNombre(),salas.getEstado());
             add(pns);
         }
 
     }
-    public JPanel crearpns(String nombre, String estado){
+    public JPanel crearpanelsalas(String nombre, String estado){
         JPanel pn=new JPanel();
         pn.setLayout(new BorderLayout());
         JLabel nombreLabel = new JLabel(nombre, SwingConstants.CENTER);

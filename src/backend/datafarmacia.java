@@ -96,3 +96,4 @@ public class datafarmacia {
         return new ArrayList<>(medicamentos); // Devuelve una copia de la lista de medicamentos
     }
 
+}

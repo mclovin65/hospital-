@@ -25,9 +25,7 @@ public medicamento(String nombre, String formaFarmaceutica, String dosis, String
     this.contraindicaciones = contraindicaciones;
 }
 public String getNombre(){return nombre;}
-
 public void setNombre(String nombre){this.nombre=nombre;}
-
     public String getFormaFarmaceutica() {
         return formafarmaceutica;
     }
