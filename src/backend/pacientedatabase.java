@@ -3,7 +3,7 @@ package backend;
 import java.util.ArrayList;
 import java.util.List;
 
-public class pacientedatabase {
+public class  pacientedatabase {
         private List<datapa> pacientes;
 
         public pacientedatabase() {

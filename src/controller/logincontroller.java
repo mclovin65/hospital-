@@ -29,6 +29,7 @@ public class logincontroller {
 
         HashMap<String, String> resultado = validacionDatodds.validar(usuario, contraseña);
 
+
         if (!resultado.isEmpty()) {
             String nombreDoctor = resultado.get("nombre");
             String especialidad = resultado.get("especialidad");

@@ -32,13 +32,13 @@ public class salasview extends JPanel {
 
         switch (estado) {
             case "En uso":
-                pn.setBackground(Color.RED);
+                pn.setBackground(Color.blue);
                 break;
             case "Fuera de servicio":
-                pn.setBackground(Color.YELLOW);
+                pn.setBackground(Color.MAGENTA);
                 break;
             case "Disponible":
-                pn.setBackground(Color.GREEN);
+                pn.setBackground(Color.orange);
                 break;
 
         }

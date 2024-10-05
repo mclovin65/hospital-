@@ -31,7 +31,7 @@ public class DoctorView extends JFrame {
         // Panel Header
         JPanel headerPanel = new JPanel();
         headerPanel.setPreferredSize(new Dimension(1300, 60));
-        headerPanel.setBackground(Color.DARK_GRAY);
+        headerPanel.setBackground(Color.BLACK);
         headerPanel.setLayout(new BorderLayout());
 
         // JLabel para el nombre del hospital
@@ -44,13 +44,17 @@ public class DoctorView extends JFrame {
         // Información del doctor
         JPanel doctorInfoPanel = new JPanel();
         doctorInfoPanel.setLayout(new GridLayout(2, 1));
-        doctorInfoPanel.setBackground(Color.DARK_GRAY);
+        doctorInfoPanel.setBackground(Color.black);
 
         // Etiquetas para el nombre y especialidad del doctor
         nombreDoctorLabel = new JLabel("Nombre del doctor: " + nombreDoctor);
         nombreDoctorLabel.setForeground(Color.WHITE);
+        nombreDoctorLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        nombreDoctorLabel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0)); // Espaciado
         especialidadLabel = new JLabel("Especialidad: " + especialidad);
         especialidadLabel.setForeground(Color.WHITE);
+        especialidadLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        especialidadLabel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0)); // Espaciado
 
         // Inicializar salas y medicamentos
         datasalas datasalas = new datasalas();
@@ -77,7 +81,7 @@ public class DoctorView extends JFrame {
     private JPanel componentesMenuLateral() {
         JPanel menu = new JPanel();
         menu.setPreferredSize(new Dimension(250, pantalla[1]));
-        menu.setBackground(Color.DARK_GRAY);
+        menu.setBackground(Color.black);
         menu.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -100,6 +104,26 @@ public class DoctorView extends JFrame {
 
     private JButton op(String texto, java.awt.event.ActionListener actionListener) {
         JButton boton = new JButton(texto);
+        boton.setFont(new Font("Arial", Font.BOLD, 14));
+        boton.setForeground(Color.WHITE);
+        boton.setBackground(new Color(70, 130, 180)); // Azul claro
+        boton.setFocusPainted(false); // Elimina el borde de selección al hacer clic
+        boton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Márgenes internos
+        boton.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Cambia el cursor al pasar sobre el botón
+
+        // Efecto de hover (cambia el color cuando pasas el mouse sobre el botón)
+        boton.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                boton.setBackground(new Color(100, 149, 237)); // Cambia el color al pasar el ratón
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                boton.setBackground(new Color(70, 130, 180)); // Color original
+            }
+        });
+
         boton.addActionListener(actionListener);
         return boton;
     }
@@ -109,6 +133,7 @@ public class DoctorView extends JFrame {
         pacientesView panelPacientes = new pacientesView(listaPacientes);
 
         panelCentro.removeAll();
+        panelCentro.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Márgenes alrededor del panel
         panelCentro.add(panelPacientes, BorderLayout.CENTER);
 
         revalidate();
@@ -128,6 +153,7 @@ public class DoctorView extends JFrame {
         }
 
         panelCentro.removeAll();
+        panelCentro.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Márgenes alrededor del panel
         panelCentro.add(panelSalas, BorderLayout.CENTER);
 
         revalidate();
@@ -138,14 +164,14 @@ public class DoctorView extends JFrame {
         JPanel panelMedicamentos = new JPanel();
         panelMedicamentos.setLayout(new GridLayout(0, 7, 10, 10));
 
-        // Añadir títulos de las columnas
-        panelMedicamentos.add(new JLabel("Nombre"));
-        panelMedicamentos.add(new JLabel("Dosis"));
-        panelMedicamentos.add(new JLabel("Número de Lote"));
-        panelMedicamentos.add(new JLabel("Principio Activo"));
-        panelMedicamentos.add(new JLabel("Forma Farmacéutica"));
-        panelMedicamentos.add(new JLabel("Indicaciones"));
-        panelMedicamentos.add(new JLabel("Fecha de Caducidad"));
+        // Añadir títulos de las columnas con estilo
+        String[] columnas = {"Nombre", "Dosis", "Número de Lote", "Principio Activo", "Forma Farmacéutica", "Indicaciones", "Fecha de Caducidad"};
+        for (String columna : columnas) {
+            JLabel label = new JLabel(columna);
+            label.setFont(new Font("Arial", Font.BOLD, 14));
+            label.setForeground(Color.DARK_GRAY);
+            panelMedicamentos.add(label);
+        }
 
         // Ahora añadimos los datos de cada medicamento
         for (medicamento med : listamedicamentos) {
@@ -159,6 +185,7 @@ public class DoctorView extends JFrame {
         }
 
         panelCentro.removeAll();
+        panelCentro.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Márgenes
         panelCentro.add(panelMedicamentos, BorderLayout.CENTER);
 
         revalidate();
