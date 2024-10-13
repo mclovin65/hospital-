@@ -3,7 +3,7 @@ package view;
 import java.awt.*;
 import java.util.ArrayList;
 
-import backend.sala;
+import model.sala;
 
 
 import javax.swing.*;
