@@ -1,11 +1,10 @@
 package view;
 
-import backend.medicamento;
-import backend.datafarmacia;
-import backend.datapa;
-import backend.datasalas;
-import backend.pacientedatabase;
-import backend.sala;
+import model.medicamento;
+import model.datapa;
+import model.datasalas;
+import model.pacientedatabase;
+import model.sala;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,10 +57,7 @@ public class DoctorView extends JFrame {
 
         // Inicializar salas y medicamentos
         datasalas datasalas = new datasalas();
-        listasalas = datasalas.getListasalas();
 
-        datafarmacia datafarmacia = new datafarmacia();
-        listamedicamentos = (ArrayList<medicamento>) datafarmacia.getmedicamentos();
 
         doctorInfoPanel.add(nombreDoctorLabel);
         doctorInfoPanel.add(especialidadLabel);

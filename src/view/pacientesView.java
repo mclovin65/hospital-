@@ -1,6 +1,6 @@
 package view;
 
-import backend.datapa;
+import model.datapa;
 
 import javax.swing.*;
 import java.awt.*;

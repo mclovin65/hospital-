@@ -1,5 +1,8 @@
 package backend;
 
+import model.DoctorDatabase;
+import model.dataDoc;
+
 import java.util.HashMap;
 
 public class ValidacionDatodds {

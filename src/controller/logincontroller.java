@@ -1,7 +1,7 @@
 package controller;
 
 import backend.ValidacionDatodds;
-import backend.pacientedatabase;
+import model.pacientedatabase;
 import view.DoctorView;
 import view.loginview;
 
@@ -35,7 +35,7 @@ public class logincontroller {
             String especialidad = resultado.get("especialidad");
 
             // Crear y mostrar la vista del doctor
-            DoctorView doctorView = new DoctorView(nombreDoctor, especialidad, pacienteDB);
+            DoctorView doctorView = new DoctorView();
             doctorView.setVisible(true);
         }
     }

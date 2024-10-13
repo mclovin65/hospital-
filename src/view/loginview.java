@@ -75,33 +75,12 @@ public class loginview extends JFrame {
         loginbutton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Espaciado dentro del botón
 
         // Efecto de hover para el botón
-        loginbutton.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginbutton.setBackground(new Color(100, 149, 237)); // Cambia el color al pasar el mouse
-            }
 
-            @Override
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginbutton.setBackground(new Color(70, 130, 180)); // Color original
-            }
-        });
 
         formPanel.add(loginbutton, gbc);
 
         // Añadir el formulario al centro de la ventana
         add(formPanel, BorderLayout.CENTER);
-
-        // Panel inferior con un mensaje o espaciador
-        JPanel footerPanel = new JPanel();
-        footerPanel.setPreferredSize(new Dimension(400, 40));
-        footerPanel.setBackground(Color.WHITE);
-        JLabel footerLabel = new JLabel("Hospital Santa Catalina");
-        footerLabel.setFont(new Font("Arial", Font.ITALIC, 12));
-        footerLabel.setForeground(Color.GRAY);
-        footerPanel.add(footerLabel);
-
-        add(footerPanel, BorderLayout.SOUTH);
     }
 
     public JButton getLoginButton() {
